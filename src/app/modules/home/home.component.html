@@ -1,0 +1,62 @@
+<nb-layout>
+  <nb-layout-column>
+    <div class="row pb-2">
+      <button
+        nbButton
+        shape="round"
+        status="success"
+        (click)="openCreateTicketWindow()"
+      >
+        <nb-icon icon="plus-outline"></nb-icon>
+      </button>
+    </div>
+    <div class="row">
+      <div class="col-4" *ngFor="let ticket of openedTickets">
+        <nb-card status="success">
+          <nb-card-header>
+            <div class="row">
+              <div class="col">{{ ticket.subject }}</div>
+              <div class="col text-right">{{ ticket.customerName }}</div>
+            </div>
+          </nb-card-header>
+          <nb-card-body>
+            <div class="row">
+              <div class="col">Description: {{ ticket.description }}</div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col">
+                Ticket type: <b>{{ ticket.ticketTypeName }}</b>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                Service type: <b>{{ ticket.serviceTypeName }}</b>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                Status: <b>{{ ticket.statusName }}</b>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                Priority: <b>{{ ticket.priorityName }}</b>
+              </div>
+            </div>
+          </nb-card-body>
+          <nb-card-footer>
+            <div class="row">
+              <div class="col">Opened on: {{ ticket.openDateTime | date:'short'}}</div>
+              <div class="col-4 d-flex justify-content-end">
+                <button nbButton shape="round" status="danger" size="small" (click)="closeTicket(ticket)">
+                  Close Ticket
+                </button>
+              </div>
+            </div>
+          </nb-card-footer>
+        </nb-card>
+      </div>
+    </div>
+  </nb-layout-column>
+</nb-layout>

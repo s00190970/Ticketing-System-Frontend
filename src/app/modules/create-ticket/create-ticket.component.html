@@ -1,0 +1,42 @@
+<nb-layout>
+  <nb-layout-column>
+    <h1>Create Ticket</h1>
+    <input
+      type="text"
+      nbInput
+      fullWidth
+      shape="semi-round"
+      placeholder="Subject"
+      [(ngModel)]="inputSubject"
+    />
+    <input
+      type="text"
+      nbInput
+      fullWidth
+      shape="semi-round"
+      placeholder="Customer name"
+      [(ngModel)]="inputCustomerName"
+    />
+    <textarea
+      nbInput
+      fullWidth
+      shape="semi-round"
+      placeholder="Ticket Description"
+      [(ngModel)]="inputDescription"
+    ></textarea>
+    <nb-select placeholder="Priority" shape="semi-round" [(ngModel)]="selectedPriority">
+      <nb-option *ngFor="let priority of priorities" [value]='priority.name'>{{priority.name}}</nb-option>
+    </nb-select>
+    <nb-select placeholder="Service Type" shape="semi-round" [(ngModel)]="selectedServiceType">
+            <nb-option *ngFor="let serviceType of serviceTypes" [value]='serviceType.name'>{{serviceType.name}}</nb-option>
+    </nb-select>
+    <nb-select placeholder="Ticket Type" shape="semi-round" [(ngModel)]="selectedTicketType">
+            <nb-option *ngFor="let ticketType of ticketTypes" [value]='ticketType.name'>{{ticketType.name}}</nb-option>
+    </nb-select>
+    <nb-select placeholder="Status" shape="semi-round" [(ngModel)]="selectedStatus">
+            <nb-option *ngFor="let status of statuses" [value]='status.name'>{{status.name}}</nb-option>
+    </nb-select>
+    <br>
+    <button nbButton status="success" shape="semi-round" (click)="submitTicket()">Submit</button>
+  </nb-layout-column>
+</nb-layout>

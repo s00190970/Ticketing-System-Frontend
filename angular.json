@@ -24,7 +24,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "src/styles.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           },
@@ -120,6 +122,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "TicketingSystemClient"
 }
