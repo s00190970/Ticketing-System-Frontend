@@ -8,13 +8,15 @@ import { LoginComponent } from './modules/authentication/login/login.component';
 import { RegisterComponent } from './modules/authentication/register/register.component';
 import { AdminComponent } from './modules/admin/admin.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbWindowModule, NbWindowService, NbInputModule, NbSelectModule, NbIconModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbWindowModule, NbWindowService, NbInputModule, NbSelectModule, NbIconModule, NbCheckboxModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { TicketService } from './core/services/ticket.service';
 import { CreateTicketComponent } from './modules/create-ticket/create-ticket.component'
 import { FormsModule } from '@angular/forms';
 import { TicketPropertiesService } from './core/services/ticketProperties.service';
+import { EditTicketComponent } from './modules/edit-ticket/edit-ticket.component';
+import { SettingsService } from './core/services/settings.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { TicketPropertiesService } from './core/services/ticketProperties.servic
     RegisterComponent,
     AdminComponent,
     CreateTicketComponent,
+    EditTicketComponent,
   ],
   imports: [
     HttpClientModule,
@@ -40,8 +43,9 @@ import { TicketPropertiesService } from './core/services/ticketProperties.servic
     FormsModule,
     NbInputModule,
     NbSelectModule,
+    NbCheckboxModule
   ],
-  providers: [TicketService, TicketPropertiesService, NbWindowService],
+  providers: [TicketService, TicketPropertiesService, NbWindowService, SettingsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,6 +4,7 @@ import { ITicketProperty } from 'src/app/commons/models/ticket/ticketProperty.mo
 import { ITicketResponse } from 'src/app/commons/models/ticket/ticketResponse.model';
 import { ITicketRequest } from 'src/app/commons/models/ticket/ticketRequest.model';
 import { TicketService } from 'src/app/core/services/ticket.service';
+import { NbWindowRef } from '@nebular/theme';
 
 @Component({
   selector: 'app-create-ticket',
@@ -25,7 +26,8 @@ export class CreateTicketComponent implements OnInit {
   selectedTicketType: string;
   selectedStatus: string;
   
-  constructor(private ticketPropertyService: TicketPropertiesService, private ticketService: TicketService) { }
+  constructor(private ticketPropertyService: TicketPropertiesService, private ticketService: TicketService, 
+    protected windowRef: NbWindowRef) { }
 
   ngOnInit() {
     this.ticketPropertyService.getPriorities().subscribe(response => {
@@ -63,6 +65,15 @@ export class CreateTicketComponent implements OnInit {
     this.ticketService.createTicket(submittedTicket).subscribe(response => {
       console.log(response);
     })
+    this.closeWindow();
+  }
+
+  minimizeWindow() {
+    this.windowRef.minimize();
+  }
+  
+  closeWindow() {
+    this.windowRef.close();
   }
 
 }

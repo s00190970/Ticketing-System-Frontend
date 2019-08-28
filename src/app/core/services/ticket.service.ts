@@ -9,9 +9,7 @@ import { ITicketRequest } from 'src/app/commons/models/ticket/ticketRequest.mode
 export class TicketService{
 
     apiUrl = baseUrl + "/Tickets";
-    constructor(private httpClient: HttpClient){
-
-    }
+    constructor(private httpClient: HttpClient) { }
 
     public getTickets(): Observable<ITicketResponse[]> {
         const httpOptions = { headers: this.prepareAuthHeader() };

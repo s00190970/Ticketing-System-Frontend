@@ -1,0 +1,38 @@
+<input
+  type="text"
+  nbInput
+  fullWidth
+  shape="semi-round"
+  placeholder="Subject"
+  [(ngModel)]="ticketToEdit.subject"
+/>
+<input
+  type="text"
+  nbInput
+  fullWidth
+  shape="semi-round"
+  placeholder="Customer name"
+  [(ngModel)]="ticketToEdit.customerName"
+  [attr.disabled]="canModifyCustomerName ? null : '' "
+/>
+<textarea
+  nbInput
+  fullWidth
+  shape="semi-round"
+  placeholder="Ticket Description"
+  [(ngModel)]="ticketToEdit.description"
+></textarea>
+<nb-select placeholder="Priority" shape="semi-round" [(ngModel)]="ticketToEdit.priorityName">
+  <nb-option *ngFor="let priority of priorities" [value]='priority.name'>{{priority.name}}</nb-option>
+</nb-select>
+<nb-select placeholder="Service Type" shape="semi-round" [(ngModel)]="ticketToEdit.serviceTypeName" [disabled]="canModifyServiceType ? null : '' ">
+        <nb-option *ngFor="let serviceType of serviceTypes" [value]='serviceType.name'>{{serviceType.name}}</nb-option>
+</nb-select>
+<nb-select placeholder="Ticket Type" shape="semi-round" [(ngModel)]="ticketToEdit.ticketTypeName" [disabled]="canModifyTicketType ? null : '' ">
+        <nb-option *ngFor="let ticketType of ticketTypes" [value]='ticketType.name'>{{ticketType.name}}</nb-option>
+</nb-select>
+<nb-select placeholder="Status" shape="semi-round" [(ngModel)]="ticketToEdit.statusName">
+        <nb-option *ngFor="let status of statuses" [value]='status.name'>{{status.name}}</nb-option>
+</nb-select>
+<br>
+<button nbButton status="success" shape="semi-round" (click)="submitTicket()">Submit</button>

@@ -5,6 +5,7 @@ import { AdminComponent } from './modules/admin/admin.component';
 import { LoginComponent } from './modules/authentication/login/login.component';
 import { RegisterComponent } from './modules/authentication/register/register.component';
 import { CreateTicketComponent } from './modules/create-ticket/create-ticket.component';
+import { EditTicketComponent } from './modules/edit-ticket/edit-ticket.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,11 @@ const routes: Routes = [
   {
     path: 'create-ticket',
   component: CreateTicketComponent
-}
+  },
+  {
+    path: 'edit-ticket',
+    component: EditTicketComponent
+  }
 ];
 
 @NgModule({

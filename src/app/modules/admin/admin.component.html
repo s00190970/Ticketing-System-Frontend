@@ -1,1 +1,13 @@
-<p>admin works!</p>
+<nb-layout>
+  <nb-layout-column>
+    <h1>Settings</h1>
+    <div class="row" *ngFor="let setting of settings">
+      <nb-checkbox
+        (checkedChange)="toggle($event, setting)"
+        [checked]="setting.enabled"
+        status="primary"
+        >{{ setting.name }}</nb-checkbox
+      >
+    </div>
+  </nb-layout-column>
+</nb-layout>

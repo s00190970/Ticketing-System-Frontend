@@ -43,6 +43,9 @@
               <div class="col">
                 Priority: <b>{{ ticket.priorityName }}</b>
               </div>
+              <div class="col-4 d-flex justify-content-end">
+                <button nbButton shape="round" status="warning" size="small" (click)="openEditTicketWindow(ticket)">Edit</button>
+              </div>
             </div>
           </nb-card-body>
           <nb-card-footer>
