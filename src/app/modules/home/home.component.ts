@@ -1,7 +1,7 @@
 import { Component, OnInit, NgModule } from "@angular/core";
 import { ITicketResponse } from "../../commons/models/ticket/ticketResponse.model";
 import { TicketService } from "../../core/services/ticket.service";
-import { NbWindowService, NbWindowRef } from "@nebular/theme";
+import { NbWindowService, NbWindowRef, NbToastrService } from "@nebular/theme";
 import { CreateTicketComponent } from "../create-ticket/create-ticket.component";
 import { ITicketRequest } from "src/app/commons/models/ticket/ticketRequest.model";
 import { EditTicketComponent } from "../edit-ticket/edit-ticket.component";
@@ -28,7 +28,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private ticketService: TicketService,
     private windowService: NbWindowService,
-    private ticketPropertyService: TicketPropertiesService
+    private ticketPropertyService: TicketPropertiesService, 
+    private toastrService: NbToastrService
   ) {}
 
   ngOnInit() {
@@ -62,6 +63,9 @@ export class HomeComponent implements OnInit {
     console.log(ticket);
     this.ticketService.updateTicket(ticket).subscribe(response => {
       console.log(response);
+      if(response.closeDateTime){
+        this.toastrService.show("Ticket closed", "Sucess", {status: "success"})
+      }
       this.getTickets();
     });
   }

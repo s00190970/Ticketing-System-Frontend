@@ -16,10 +16,10 @@ export class SettingsService{
         return this.httpClient.get<ISetting[]>(this.apiUrl, httpOptions);
     }
 
-    public updateSettings(setting: ISetting): Observable<ISetting[]> {
+    public updateSettings(setting: ISetting): Observable<ISetting> {
         const httpOptions = { headers: this.prepareHeader() };
         const settingUrl = this.apiUrl + "/" + setting.id;
-        return this.httpClient.put<ISetting[]>(settingUrl, setting, httpOptions);
+        return this.httpClient.put<ISetting>(settingUrl, setting, httpOptions);
     }
 
     private prepareHeader(): HttpHeaders {

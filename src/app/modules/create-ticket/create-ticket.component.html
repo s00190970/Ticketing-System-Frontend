@@ -1,37 +1,122 @@
-    <input
-      type="text"
-      nbInput
-      fullWidth
-      shape="semi-round"
-      placeholder="Subject"
-      [(ngModel)]="inputSubject"
-    />
-    <input
-      type="text"
-      nbInput
-      fullWidth
-      shape="semi-round"
-      placeholder="Customer name"
-      [(ngModel)]="inputCustomerName"
-    />
-    <textarea
-      nbInput
-      fullWidth
-      shape="semi-round"
-      placeholder="Ticket Description"
-      [(ngModel)]="inputDescription"
-    ></textarea>
-    <nb-select placeholder="Priority" shape="semi-round" [(ngModel)]="selectedPriority">
-      <nb-option *ngFor="let priority of priorities" [value]='priority.name'>{{priority.name}}</nb-option>
-    </nb-select>
-    <nb-select placeholder="Service Type" shape="semi-round" [(ngModel)]="selectedServiceType">
-            <nb-option *ngFor="let serviceType of serviceTypes" [value]='serviceType.name'>{{serviceType.name}}</nb-option>
-    </nb-select>
-    <nb-select placeholder="Ticket Type" shape="semi-round" [(ngModel)]="selectedTicketType">
-            <nb-option *ngFor="let ticketType of ticketTypes" [value]='ticketType.name'>{{ticketType.name}}</nb-option>
-    </nb-select>
-    <nb-select placeholder="Status" shape="semi-round" [(ngModel)]="selectedStatus">
-            <nb-option *ngFor="let status of statuses" [value]='status.name'>{{status.name}}</nb-option>
-    </nb-select>
-    <br>
-    <button nbButton status="success" shape="semi-round" (click)="submitTicket()">Submit</button>
+<input
+  type="text"
+  id="subjectInput"
+  name="subjectInput"
+  #subjectInput="ngModel"
+  nbInput
+  fullWidth
+  shape="semi-round"
+  placeholder="Subject"
+  [(ngModel)]="inputSubject"
+  required
+/>
+<input
+  type="text"
+  id="customerInput"
+  name="customerInput"
+  #customerInput="ngModel"
+  nbInput
+  fullWidth
+  shape="semi-round"
+  placeholder="Customer name"
+  [(ngModel)]="inputCustomerName"
+  required
+/>
+<textarea
+  id="descriptionInput"
+  name="descriptionInput"
+  #descriptionInput="ngModel"
+  nbInput
+  fullWidth
+  shape="semi-round"
+  placeholder="Ticket Description"
+  [(ngModel)]="inputDescription"
+  required
+></textarea>
+<nb-select
+  placeholder="Priority"
+  id="prioritySelect"
+  name="prioritySelect"
+  #prioritySelect="ngModel"
+  shape="semi-round"
+  [(ngModel)]="selectedPriority"
+  required
+>
+  <nb-option *ngFor="let priority of priorities" [value]="priority.name">{{
+    priority.name
+  }}</nb-option>
+</nb-select>
+<nb-select
+  placeholder="Service Type"
+  id="serviceTypeSelect"
+  name="serviceTypeSelect"
+  #serviceTypeSelect="ngModel"
+  shape="semi-round"
+  [(ngModel)]="selectedServiceType"
+  required
+>
+  <nb-option
+    *ngFor="let serviceType of serviceTypes"
+    [value]="serviceType.name"
+    >{{ serviceType.name }}</nb-option
+  >
+</nb-select>
+<nb-select
+  placeholder="Ticket Type"
+  id="ticketTypeSelect"
+  name="ticketTypeSelect"
+  #ticketTypeSelect="ngModel"
+  shape="semi-round"
+  [(ngModel)]="selectedTicketType"
+  required
+>
+  <nb-option *ngFor="let ticketType of ticketTypes" [value]="ticketType.name">{{
+    ticketType.name
+  }}</nb-option>
+</nb-select>
+<nb-select
+  placeholder="Status"
+  id="statusSelect"
+  name="statusSelect"
+  #statusSelect="ngModel"
+  shape="semi-round"
+  [(ngModel)]="selectedStatus"
+  required
+>
+  <nb-option *ngFor="let status of statuses" [value]="status.name">{{
+    status.name
+  }}</nb-option>
+</nb-select>
+<br />
+<div
+  *ngIf="subjectInput.invalid && (subjectInput.dirty || subjectInput.touched)"
+  class="alert alert-danger"
+>
+  <div *ngIf="subjectInput.errors.required">
+    Subject is required.
+  </div>
+</div>
+<div
+  *ngIf="
+    customerInput.invalid && (customerInput.dirty || customerInput.touched)
+  "
+  class="alert alert-danger"
+>
+  <div *ngIf="customerInput.errors.required">
+    Customer name is required.
+  </div>
+</div>
+<div
+  *ngIf="
+    descriptionInput.invalid &&
+    (descriptionInput.dirty || descriptionInput.touched)
+  "
+  class="alert alert-danger"
+>
+  <div *ngIf="descriptionInput.errors.required">
+    Description is required.
+  </div>
+</div>
+<button nbButton status="success" shape="semi-round" (click)="submitTicket()">
+  Submit
+</button>

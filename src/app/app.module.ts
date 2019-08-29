@@ -8,7 +8,7 @@ import { LoginComponent } from './modules/authentication/login/login.component';
 import { RegisterComponent } from './modules/authentication/register/register.component';
 import { AdminComponent } from './modules/admin/admin.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbWindowModule, NbWindowService, NbInputModule, NbSelectModule, NbIconModule, NbCheckboxModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbWindowModule, NbWindowService, NbInputModule, NbSelectModule, NbIconModule, NbCheckboxModule, NbToastrModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { TicketService } from './core/services/ticket.service';
@@ -43,7 +43,8 @@ import { SettingsService } from './core/services/settings.service';
     FormsModule,
     NbInputModule,
     NbSelectModule,
-    NbCheckboxModule
+    NbCheckboxModule,
+    NbToastrModule.forRoot(),
   ],
   providers: [TicketService, TicketPropertiesService, NbWindowService, SettingsService],
   bootstrap: [AppComponent]

@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { NbWindowRef } from "@nebular/theme";
+import { NbWindowRef, NbToastrService } from "@nebular/theme";
 import { ITicketRequest } from "src/app/commons/models/ticket/ticketRequest.model";
 import { ISetting } from "src/app/commons/models/settings/setting.model";
 import { SettingsService } from "src/app/core/services/settings.service";
-import { ITicketProperty } from 'src/app/commons/models/ticket/ticketProperty.model';
-import { IWindowContext } from 'src/app/commons/models/context/windowContext.model';
-import { TicketService } from 'src/app/core/services/ticket.service';
-import { ITicketResponse } from 'src/app/commons/models/ticket/ticketResponse.model';
+import { ITicketProperty } from "src/app/commons/models/ticket/ticketProperty.model";
+import { IWindowContext } from "src/app/commons/models/context/windowContext.model";
+import { TicketService } from "src/app/core/services/ticket.service";
+import { ITicketResponse } from "src/app/commons/models/ticket/ticketResponse.model";
 
 @Component({
   selector: "app-edit-ticket",
@@ -30,13 +30,14 @@ export class EditTicketComponent implements OnInit {
   constructor(
     protected windowRef: NbWindowRef,
     private settingServices: SettingsService,
-    private ticketService: TicketService
+    private ticketService: TicketService,
+    private toastrService: NbToastrService
   ) {}
 
   ngOnInit() {
     this.getSettings();
     this.windowContext = <IWindowContext>this.windowRef.config.context;
-    console.log(this.windowContext)
+    console.log(this.windowContext);
     this.ticketToEdit = this.windowContext.ticket;
     this.priorities = this.windowContext.priorities;
     this.ticketTypes = this.windowContext.ticketTypes;
@@ -67,14 +68,33 @@ export class EditTicketComponent implements OnInit {
     });
   }
 
-  private submitTicket(){
-    console.log("submitted ticket:");
-    console.log(this.ticketToEdit);
-    console.log("returned ticket:");
-    this.ticketService.updateTicket(this.ticketToEdit).subscribe(response => {
-      console.log(response);
-      this.closeWindow();
-    })
+  private submitTicket() {
+    if (
+      this.ticketToEdit.subject &&
+      this.ticketToEdit.customerName &&
+      this.ticketToEdit.description &&
+      this.ticketToEdit.priorityName &&
+      this.ticketToEdit.serviceTypeName &&
+      this.ticketToEdit.ticketTypeName &&
+      this.ticketToEdit.statusName
+    ) {
+      this.ticketService.updateTicket(this.ticketToEdit).subscribe(response => {
+        console.log(response);
+        if (response.id) {
+          this.toastrService.show("Ticket edited", "Success", {
+            status: "success"
+          });
+        }
+        this.closeWindow();
+      });
+    } else {
+      this.toastrService.show(
+        "Make sure to fill out all the required fields!",
+        "Warning",
+        {
+          status: "warning"
+        }
+      );
+    }
   }
-
 }

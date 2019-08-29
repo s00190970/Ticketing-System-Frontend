@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ISetting } from 'src/app/commons/models/settings/setting.model';
 import { SettingsService } from 'src/app/core/services/settings.service';
+import { NbToastrService, NbPosition } from '@nebular/theme';
 
 @Component({
   selector: 'app-admin',
@@ -10,7 +11,7 @@ import { SettingsService } from 'src/app/core/services/settings.service';
 export class AdminComponent implements OnInit {
 
   settings: ISetting[]
-  constructor(private settingServices: SettingsService) { }
+  constructor(private settingServices: SettingsService, private toastrService: NbToastrService) { }
   
   ngOnInit() {
     this.getSettings();
@@ -28,11 +29,8 @@ export class AdminComponent implements OnInit {
     console.log(checked);
     this.settingServices.updateSettings(setting).subscribe(response=>{
       console.log(response);
+      this.toastrService.show(`${response.name} is set to ${response.enabled}`, "Setting updated", {status: "success"})
     });
-  }
-
-  submitSettings(){
-    console.log(this.settings);
   }
 
 }
