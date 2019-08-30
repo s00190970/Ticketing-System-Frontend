@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { ITicketProperty } from 'src/app/commons/models/ticket/ticketProperty.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ISetting } from 'src/app/commons/models/settings/setting.model';
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 
 @Injectable()
 export class SettingsService{
     apiUrl = baseUrl + "/Settings";
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient, private authService: NbAuthService) { }
 
     public getSettings(): Observable<ISetting[]> {
         const httpOptions = { headers: this.prepareHeader() };
@@ -24,9 +25,15 @@ export class SettingsService{
 
     private prepareHeader(): HttpHeaders {
         let headers_object = new HttpHeaders();
+        let token: string;
     
+        this.authService.getToken().subscribe((storedToken: NbAuthJWTToken) => {
+          token = storedToken.getValue();
+        });
+
         headers_object = headers_object.append('Content-Type', 'application/json');
-    
+        headers_object = headers_object.append('Authorization', `Bearer ${token}`);
+
         return headers_object;
       }
 }

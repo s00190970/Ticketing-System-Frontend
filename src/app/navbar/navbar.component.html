@@ -1,0 +1,47 @@
+<nb-layout>
+<nb-layout-header fixed>
+  <!-- Insert header here -->
+  <button
+    nbButton
+    status="primary"
+    shape="round"
+    [routerLink]="['/home']"
+    routerLinkActive="router-link-active"
+  >
+    Home
+  </button>
+  <button *ngIf="isAdmin"
+    nbButton
+    status="primary"
+    shape="round"
+    [routerLink]="['/admin']"
+    routerLinkActive="router-link-active"
+  >
+    Admin
+  </button>
+  <button *ngIf="!loggedIn"
+    nbButton
+    status="primary"
+    shape="round"
+    [routerLink]="['/login']"
+    routerLinkActive="router-link-active"
+  >
+    Login
+  </button>
+  <button *ngIf="!loggedIn"
+    nbButton
+    status="primary"
+    shape="round"
+    [routerLink]="['/register']"
+    routerLinkActive="router-link-active"
+  >
+    Register
+  </button>
+
+  <nb-actions *ngIf="userLoggedIn()" size="medium">
+    <nb-action class="float-right">
+      <nb-user [nbContextMenu]="userMenu" [name]="username"></nb-user>
+    </nb-action>
+  </nb-actions>
+</nb-layout-header>
+</nb-layout>

@@ -4,12 +4,13 @@ import { ITicketResponse } from '../../commons/models/ticket/ticketResponse.mode
 import { baseUrl } from '../../commons/constants/constants'
 import { Observable } from 'rxjs';
 import { ITicketRequest } from 'src/app/commons/models/ticket/ticketRequest.model';
+import { NbAuthService, NbAuthJWTToken } from '@nebular/auth';
 
 @Injectable()
 export class TicketService{
 
     apiUrl = baseUrl + "/Tickets";
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient, private authService: NbAuthService) { }
 
     public getTickets(): Observable<ITicketResponse[]> {
         const httpOptions = { headers: this.prepareAuthHeader() };
@@ -34,12 +35,12 @@ export class TicketService{
         let headers_object = new HttpHeaders();
         let token: string;
     
-        // this.authService.getToken().subscribe((storedToken: NbAuthJWTToken) => {
-        //   token = storedToken.getValue();
-        // });
-    
+        this.authService.getToken().subscribe((storedToken: NbAuthJWTToken) => {
+          token = storedToken.getValue();
+        });
+            
         headers_object = headers_object.append('Content-Type', 'application/json');
-        //headers_object = headers_object.append('Authorization', 'Bearer ' + token);
+        headers_object = headers_object.append('Authorization', "Bearer " + token);
     
         return headers_object;
       }

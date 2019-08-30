@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseUrl } from '../../commons/constants/constants'
 import { Observable } from 'rxjs';
 import { ITicketProperty } from 'src/app/commons/models/ticket/ticketProperty.model';
+import { NbAuthService, NbAuthJWTToken } from '@nebular/auth';
 
 
 @Injectable()
@@ -12,7 +13,7 @@ export class TicketPropertiesService{
     ticketTypeUrl = baseUrl + "/TicketTypes";
     statusUrl = baseUrl + "/Statuses";
 
-    constructor(private httpClient: HttpClient){
+    constructor(private httpClient: HttpClient, private authService: NbAuthService){
 
     }
 
@@ -40,7 +41,12 @@ export class TicketPropertiesService{
         let headers_object = new HttpHeaders();
         let token: string;
     
+        this.authService.getToken().subscribe((storedToken: NbAuthJWTToken) => {
+          token = storedToken.getValue();
+        });
+    
         headers_object = headers_object.append('Content-Type', 'application/json');
+        headers_object = headers_object.append('Authorization', `Bearer ${token}`);
     
         return headers_object;
       }

@@ -1,19 +1,10 @@
 <nb-layout>
-
-  <nb-layout-header fixed>
-  <!-- Insert header here -->
-  <button nbButton status="primary" shape="round" [routerLink]="['/home']" routerLinkActive="router-link-active" >Home</button>
-  <button nbButton status="primary" shape="round" [routerLink]="['/admin']" routerLinkActive="router-link-active" >Admin</button>
-  <button nbButton status="primary" shape="round" [routerLink]="['/login']" routerLinkActive="router-link-active" >Login</button>
-  <button nbButton status="primary" shape="round" [routerLink]="['/register']" routerLinkActive="router-link-active" >Register</button>
+  <nb-layout-header>
+    <app-navbar></app-navbar>
   </nb-layout-header>
-
-  <nb-layout-column>
-    <router-outlet></router-outlet>
-  </nb-layout-column>
-
-  <nb-layout-footer fixed>
-  <!-- Insert footer here -->
-  </nb-layout-footer>
-
-</nb-layout>
+  
+<nb-layout-column>
+  <router-outlet></router-outlet>
+</nb-layout-column>
+</nb-layout>  
+  

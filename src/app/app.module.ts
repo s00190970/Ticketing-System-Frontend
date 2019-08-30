@@ -8,7 +8,7 @@ import { LoginComponent } from './modules/authentication/login/login.component';
 import { RegisterComponent } from './modules/authentication/register/register.component';
 import { AdminComponent } from './modules/admin/admin.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbWindowModule, NbWindowService, NbInputModule, NbSelectModule, NbIconModule, NbCheckboxModule, NbToastrModule, NbAlertModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbWindowModule, NbWindowService, NbInputModule, NbSelectModule, NbIconModule, NbCheckboxModule, NbToastrModule, NbAlertModule, NbActionsModule, NbUserModule, NbContextMenuModule, NbMenuService, NbMenuModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { TicketService } from './core/services/ticket.service';
@@ -17,9 +17,11 @@ import { FormsModule } from '@angular/forms';
 import { TicketPropertiesService } from './core/services/ticketProperties.service';
 import { EditTicketComponent } from './modules/edit-ticket/edit-ticket.component';
 import { SettingsService } from './core/services/settings.service';
-import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken, NbAuthService, NbTokenService, NbTokenStorage, NbTokenLocalStorage } from '@nebular/auth';
+import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken, NbAuthService, NbTokenService, NbTokenStorage, NbTokenLocalStorage, NbUser } from '@nebular/auth';
 import { baseUrl } from './commons/constants/constants';
 import { AuthenticatedGuardService } from './core/guards/authenticated-guard.service';
+import { NbMenuInternalService } from '@nebular/theme/components/menu/menu.service';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { AuthenticatedGuardService } from './core/guards/authenticated-guard.ser
     AdminComponent,
     CreateTicketComponent,
     EditTicketComponent,
+    NavbarComponent,
   ],
   imports: [
     HttpClientModule,
@@ -48,6 +51,10 @@ import { AuthenticatedGuardService } from './core/guards/authenticated-guard.ser
     NbSelectModule,
     NbCheckboxModule,
     NbAlertModule,
+    NbMenuModule.forRoot(),
+    NbActionsModule,
+    NbUserModule,
+    NbContextMenuModule,
     NbToastrModule.forRoot(),
     NbAuthModule.forRoot({
       strategies:[
@@ -79,7 +86,7 @@ import { AuthenticatedGuardService } from './core/guards/authenticated-guard.ser
       forms: {}
     })
   ],
-  providers: [TicketService, TicketPropertiesService, NbWindowService, SettingsService, NbAuthService, NbTokenService, AuthenticatedGuardService, {provide: NbTokenStorage, useClass: NbTokenLocalStorage}],
+  providers: [TicketService, TicketPropertiesService, NbWindowService, SettingsService, NbAuthService, NbTokenService, AuthenticatedGuardService, {provide: NbTokenStorage, useClass: NbTokenLocalStorage}, NbMenuService, NbTokenLocalStorage],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
