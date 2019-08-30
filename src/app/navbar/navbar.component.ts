@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NbAuthService, NbTokenLocalStorage, NbAuthJWTToken } from '@nebular/auth';
 import { NbMenuService } from '@nebular/theme';
 import { Router } from '@angular/router';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-navbar',
@@ -31,15 +32,10 @@ export class NavbarComponent {
       this.authService.isAuthenticated().subscribe(res => this.loggedIn = res);
 
       this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
-        if (token.isValid()) {
+        if (token.isValid() && this.loggedIn) {
           this.tokenPayload = token.getPayload();
           this.username = this.tokenPayload.sub;
-          this.roles = this.tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
-          this.roles.forEach(role =>  {
-            if(role === 'Admin'){
-              this.isAdmin = true;
-            }
-          });
+          this.isAdmin = this.checkIfAdmin();
         }
         else{
           this.loggedIn = false;
@@ -56,6 +52,24 @@ export class NavbarComponent {
         this.loggedIn = false;
         this.isAdmin = false;
       }
+    }
+
+    checkIfAdmin(): boolean{
+      if(isNullOrUndefined(this.tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'])){
+        return false;
+      }
+      if(this.tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] instanceof Array){
+        <[]>this.tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'].forEach(role => {
+          if (role === "Admin"){
+            return true;
+          }
+          return false;
+        });
+      }
+      else if(this.tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === "Admin"){
+        return true;
+      }
+      return false;
     }
 
 }
