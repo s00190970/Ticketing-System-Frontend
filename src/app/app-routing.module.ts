@@ -6,11 +6,18 @@ import { LoginComponent } from './modules/authentication/login/login.component';
 import { RegisterComponent } from './modules/authentication/register/register.component';
 import { CreateTicketComponent } from './modules/create-ticket/create-ticket.component';
 import { EditTicketComponent } from './modules/edit-ticket/edit-ticket.component';
+import { AuthenticatedGuardService } from './core/guards/authenticated-guard.service';
 
 const routes: Routes = [
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthenticatedGuardService]
+  },
+  {
+    path: 'redirect-to-login',
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
   {
     path: 'admin',
@@ -26,11 +33,13 @@ const routes: Routes = [
   },
   {
     path: 'create-ticket',
-  component: CreateTicketComponent
+  component: CreateTicketComponent,
+  canActivate: [AuthenticatedGuardService]
   },
   {
     path: 'edit-ticket',
-    component: EditTicketComponent
+    component: EditTicketComponent,
+    canActivate: [AuthenticatedGuardService]
   }
 ];
 

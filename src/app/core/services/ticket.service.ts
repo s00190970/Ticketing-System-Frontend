@@ -13,6 +13,7 @@ export class TicketService{
 
     public getTickets(): Observable<ITicketResponse[]> {
         const httpOptions = { headers: this.prepareAuthHeader() };
+        console.log(this.apiUrl)
         return this.httpClient.get<ITicketResponse[]>(this.apiUrl, httpOptions);
     }
 
