@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   errors: string[] = [];
   messages: string[] = [];
-  user: IUser = {userName:"", password:""};
+  user: IUser = {id:"", userName:"", password:"", email: "", token: "", tickets: []};
   submitted: boolean = false;
 
   constructor(

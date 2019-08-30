@@ -7,8 +7,14 @@ import { RegisterComponent } from './modules/authentication/register/register.co
 import { CreateTicketComponent } from './modules/create-ticket/create-ticket.component';
 import { EditTicketComponent } from './modules/edit-ticket/edit-ticket.component';
 import { AuthenticatedGuardService } from './core/guards/authenticated-guard.service';
+import { AdminGuardService } from './core/guards/admin-guard.service';
 
 const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
   {
     path: 'home',
     component: HomeComponent,
@@ -21,7 +27,8 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    component: AdminComponent
+    component: AdminComponent,
+    canActivate: [AdminGuardService]
   },
   {
     path: 'login',

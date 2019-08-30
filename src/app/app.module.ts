@@ -22,6 +22,7 @@ import { baseUrl } from './commons/constants/constants';
 import { AuthenticatedGuardService } from './core/guards/authenticated-guard.service';
 import { NbMenuInternalService } from '@nebular/theme/components/menu/menu.service';
 import { NavbarComponent } from './navbar/navbar.component';
+import { AdminGuardService } from './core/guards/admin-guard.service';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,7 @@ import { NavbarComponent } from './navbar/navbar.component';
       forms: {}
     })
   ],
-  providers: [TicketService, TicketPropertiesService, NbWindowService, SettingsService, NbAuthService, NbTokenService, AuthenticatedGuardService, {provide: NbTokenStorage, useClass: NbTokenLocalStorage}, NbMenuService, NbTokenLocalStorage],
+  providers: [TicketService, TicketPropertiesService, NbWindowService, SettingsService, NbAuthService, NbTokenService, AuthenticatedGuardService, AdminGuardService, {provide: NbTokenStorage, useClass: NbTokenLocalStorage}, NbMenuService, NbTokenLocalStorage],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

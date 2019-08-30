@@ -12,7 +12,6 @@ export class AuthenticatedGuardService implements CanActivate{
 
     canActivate(){
         this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) =>  {
-            console.log(token.isValid())
             if(isNullOrUndefined(token) || !token.isValid()){
                 this.router.navigate(['redirect-to-login']);
                 return false;

@@ -3,6 +3,7 @@ import { NbAuthService, NbTokenLocalStorage, NbAuthJWTToken } from '@nebular/aut
 import { NbMenuService } from '@nebular/theme';
 import { Router } from '@angular/router';
 import { isNullOrUndefined } from 'util';
+import { AdminGuardService } from '../core/guards/admin-guard.service';
 
 @Component({
   selector: 'app-navbar',
@@ -19,7 +20,7 @@ export class NavbarComponent {
   roles: string[];
 
   constructor(private authService: NbAuthService, private menuService: NbMenuService, private router: Router, 
-    private localStorageService: NbTokenLocalStorage) {
+    private localStorageService: NbTokenLocalStorage, private adminGuard: AdminGuardService) {
       
 
       this.menuService.onItemClick()
@@ -55,21 +56,30 @@ export class NavbarComponent {
     }
 
     checkIfAdmin(): boolean{
-      if(isNullOrUndefined(this.tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'])){
-        return false;
-      }
-      if(this.tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] instanceof Array){
-        <[]>this.tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'].forEach(role => {
-          if (role === "Admin"){
-            return true;
+      let isAdmin = false;
+        this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
+          if (isNullOrUndefined(token) || !token.isValid()) {
+            isAdmin = false;
+          } else {
+            if (isNullOrUndefined(token.getPayload()) ||
+              isNullOrUndefined(token.getPayload()['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'])) {
+                isAdmin = false;
+            }
+    
+            if (token.getPayload()['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] instanceof Array) {
+              (<[]>token.getPayload()['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']).forEach(role => {
+                if (role === 'Admin') {
+                  isAdmin = true;
+                }
+              });
+            } else if (token.getPayload()['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Admin') {
+              isAdmin = true;
+            } else{
+              isAdmin = false;
+            }
           }
-          return false;
         });
-      }
-      else if(this.tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === "Admin"){
-        return true;
-      }
-      return false;
+        return isAdmin;
     }
 
 }

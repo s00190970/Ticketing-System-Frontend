@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { baseUrl } from 'src/app/commons/constants/constants';
 import { Observable } from 'rxjs';
-import { ITicketProperty } from 'src/app/commons/models/ticket/ticketProperty.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ISetting } from 'src/app/commons/models/settings/setting.model';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
@@ -32,7 +31,7 @@ export class SettingsService{
         });
 
         headers_object = headers_object.append('Content-Type', 'application/json');
-        headers_object = headers_object.append('Authorization', `Bearer ${token}`);
+        headers_object = headers_object.append('Authorization', "Bearer " + token);
 
         return headers_object;
       }

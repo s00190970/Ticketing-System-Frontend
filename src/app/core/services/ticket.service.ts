@@ -12,10 +12,11 @@ export class TicketService{
     apiUrl = baseUrl + "/Tickets";
     constructor(private httpClient: HttpClient, private authService: NbAuthService) { }
 
-    public getTickets(): Observable<ITicketResponse[]> {
+    public getTickets(userId: string): Observable<ITicketResponse[]> {
         const httpOptions = { headers: this.prepareAuthHeader() };
-        console.log(this.apiUrl)
-        return this.httpClient.get<ITicketResponse[]>(this.apiUrl, httpOptions);
+        let getTicketsUrl = this.apiUrl + "/Users/" + userId;
+        console.log(getTicketsUrl)
+        return this.httpClient.get<ITicketResponse[]>(getTicketsUrl, httpOptions);
     }
 
     public createTicket(ticket: ITicketRequest): Observable<ITicketResponse> {

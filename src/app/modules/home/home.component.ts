@@ -8,6 +8,8 @@ import { EditTicketComponent } from "../edit-ticket/edit-ticket.component";
 import { TicketPropertiesService } from "src/app/core/services/ticketProperties.service";
 import { ITicketProperty } from "src/app/commons/models/ticket/ticketProperty.model";
 import { IWindowContext } from "src/app/commons/models/context/windowContext.model";
+import { IUser } from 'src/app/commons/models/user/user.model';
+import { NbAuthService } from '@nebular/auth';
 
 @Component({
   selector: "app-home",
@@ -25,11 +27,14 @@ export class HomeComponent implements OnInit {
   priorities: ITicketProperty[];
   statuses: ITicketProperty[];
 
+  userId: string;
+
   constructor(
     private ticketService: TicketService,
     private windowService: NbWindowService,
     private ticketPropertyService: TicketPropertiesService, 
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private authService: NbAuthService
   ) {}
 
   ngOnInit() {
@@ -37,12 +42,15 @@ export class HomeComponent implements OnInit {
     this.getTicketProperties();
   }
 
-  private getTickets() {
-    this.ticketService.getTickets().subscribe(response => {
-      this.tickets = response;
-      this.openedTickets = this.tickets.filter(ticket => !ticket.closeDateTime);
-      console.log("get tickets");
-      console.log(this.openedTickets)
+  getTickets(){
+    this.authService.getToken().subscribe(token => {
+      if(token.isValid()){
+        this.userId = token.getPayload()['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+        this.ticketService.getTickets(this.userId).subscribe(response => {
+          this.tickets = response;
+          this.openedTickets = this.tickets.filter(ticket => !ticket.closeDateTime);
+        });
+      }
     });
   }
 
@@ -87,7 +95,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private getTicketProperties() {
+  getTicketProperties() {
     this.ticketPropertyService.getPriorities().subscribe(response => {
       this.priorities = response;
     });
