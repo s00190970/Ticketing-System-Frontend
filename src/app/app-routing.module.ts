@@ -1,50 +1,50 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './modules/home/home.component';
-import { AdminComponent } from './modules/admin/admin.component';
-import { LoginComponent } from './modules/authentication/login/login.component';
-import { RegisterComponent } from './modules/authentication/register/register.component';
-import { CreateTicketComponent } from './modules/create-ticket/create-ticket.component';
-import { EditTicketComponent } from './modules/edit-ticket/edit-ticket.component';
-import { AuthenticatedGuardService } from './core/guards/authenticated-guard.service';
-import { AdminGuardService } from './core/guards/admin-guard.service';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { HomeComponent } from "./modules/home/home.component";
+import { AdminComponent } from "./modules/admin/admin.component";
+import { LoginComponent } from "./modules/authentication/login/login.component";
+import { RegisterComponent } from "./modules/authentication/register/register.component";
+import { CreateTicketComponent } from "./modules/create-ticket/create-ticket.component";
+import { EditTicketComponent } from "./modules/edit-ticket/edit-ticket.component";
+import { AuthenticatedGuardService } from "./core/guards/authenticated-guard.service";
+import { AdminGuardService } from "./core/guards/admin-guard.service";
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: "",
+    redirectTo: "home",
+    pathMatch: "full"
   },
   {
-    path: 'home',
+    path: "home",
     component: HomeComponent,
     canActivate: [AuthenticatedGuardService]
   },
   {
-    path: 'redirect-to-login',
-    redirectTo: 'login',
-    pathMatch: 'full'
+    path: "redirect-to-login",
+    redirectTo: "login",
+    pathMatch: "full"
   },
   {
-    path: 'admin',
+    path: "admin",
     component: AdminComponent,
     canActivate: [AdminGuardService]
   },
   {
-    path: 'login',
+    path: "login",
     component: LoginComponent
   },
   {
-    path: 'register',
+    path: "register",
     component: RegisterComponent
   },
   {
-    path: 'create-ticket',
-  component: CreateTicketComponent,
-  canActivate: [AuthenticatedGuardService]
+    path: "create-ticket",
+    component: CreateTicketComponent,
+    canActivate: [AuthenticatedGuardService]
   },
   {
-    path: 'edit-ticket',
+    path: "edit-ticket",
     component: EditTicketComponent,
     canActivate: [AuthenticatedGuardService]
   }
@@ -54,4 +54,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

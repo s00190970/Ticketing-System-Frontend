@@ -8,8 +8,8 @@ import { EditTicketComponent } from "../edit-ticket/edit-ticket.component";
 import { TicketPropertiesService } from "src/app/core/services/ticketProperties.service";
 import { ITicketProperty } from "src/app/commons/models/ticket/ticketProperty.model";
 import { IWindowContext } from "src/app/commons/models/context/windowContext.model";
-import { IUser } from 'src/app/commons/models/user/user.model';
-import { NbAuthService } from '@nebular/auth';
+import { IUser } from "src/app/commons/models/user/user.model";
+import { NbAuthService } from "@nebular/auth";
 
 @Component({
   selector: "app-home",
@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private ticketService: TicketService,
     private windowService: NbWindowService,
-    private ticketPropertyService: TicketPropertiesService, 
+    private ticketPropertyService: TicketPropertiesService,
     private toastrService: NbToastrService,
     private authService: NbAuthService
   ) {}
@@ -42,13 +42,17 @@ export class HomeComponent implements OnInit {
     this.getTicketProperties();
   }
 
-  getTickets(){
+  getTickets() {
     this.authService.getToken().subscribe(token => {
-      if(token.isValid()){
-        this.userId = token.getPayload()['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+      if (token.isValid()) {
+        this.userId = token.getPayload()[
+          "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+        ];
         this.ticketService.getTickets(this.userId).subscribe(response => {
           this.tickets = response;
-          this.openedTickets = this.tickets.filter(ticket => !ticket.closeDateTime);
+          this.openedTickets = this.tickets.filter(
+            ticket => !ticket.closeDateTime
+          );
         });
       }
     });
@@ -60,19 +64,17 @@ export class HomeComponent implements OnInit {
       { title: `Create Ticket` }
     );
     this.createTicketWindowRef.onClose.subscribe(close => {
-      console.log("window closed");
       this.getTickets();
     });
   }
 
   closeTicket(ticket: ITicketResponse) {
     ticket.closeDateTime = new Date().toISOString();
-    console.log("ticket:");
-    console.log(ticket);
     this.ticketService.updateTicket(ticket).subscribe(response => {
-      console.log(response);
-      if(response.closeDateTime){
-        this.toastrService.show("Ticket closed", "Sucess", {status: "success"})
+      if (response.closeDateTime) {
+        this.toastrService.show("Ticket closed", "Sucess", {
+          status: "success"
+        });
       }
       this.getTickets();
     });
@@ -90,7 +92,6 @@ export class HomeComponent implements OnInit {
       }
     });
     this.editTicketWindowRef.onClose.subscribe(close => {
-      console.log("window closed");
       this.getTickets();
     });
   }

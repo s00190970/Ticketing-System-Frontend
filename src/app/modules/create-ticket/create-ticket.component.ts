@@ -5,7 +5,7 @@ import { ITicketResponse } from "src/app/commons/models/ticket/ticketResponse.mo
 import { ITicketRequest } from "src/app/commons/models/ticket/ticketRequest.model";
 import { TicketService } from "src/app/core/services/ticket.service";
 import { NbWindowRef, NbToastrService } from "@nebular/theme";
-import { NbAuthService } from '@nebular/auth';
+import { NbAuthService } from "@nebular/auth";
 
 @Component({
   selector: "app-create-ticket",
@@ -54,10 +54,10 @@ export class CreateTicketComponent implements OnInit {
     });
 
     this.authService.getToken().subscribe(token => {
-      if(token.isValid()){
+      if (token.isValid()) {
         this.userName = token.getPayload().sub;
       }
-    })
+    });
   }
 
   submitTicket() {
@@ -83,20 +83,20 @@ export class CreateTicketComponent implements OnInit {
     ) {
       this.ticketService.createTicket(submittedTicket).subscribe(response => {
         if (response.id) {
-          this.toastrService.show("Ticket Created! Refresh page to display it", "Success", {
-            status: "success"
-          });
+          this.toastrService.show(
+            "Ticket Created! Refresh page to display it",
+            "Success",
+            {
+              status: "success"
+            }
+          );
         }
       });
       this.closeWindow();
     } else {
-      this.toastrService.show(
-        "Make sure to fill out all fields!",
-        "Warning",
-        {
-          status: "warning"
-        }
-      );
+      this.toastrService.show("Make sure to fill out all fields!", "Warning", {
+        status: "warning"
+      });
     }
   }
 

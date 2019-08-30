@@ -37,12 +37,10 @@ export class EditTicketComponent implements OnInit {
   ngOnInit() {
     this.getSettings();
     this.windowContext = <IWindowContext>this.windowRef.config.context;
-    console.log(this.windowContext);
     this.ticketToEdit = this.windowContext.ticket;
     this.priorities = this.windowContext.priorities;
     this.ticketTypes = this.windowContext.ticketTypes;
     this.statuses = this.windowContext.statuses;
-    console.log(this.ticketToEdit);
   }
 
   minimizeWindow() {
@@ -79,7 +77,6 @@ export class EditTicketComponent implements OnInit {
       this.ticketToEdit.statusName
     ) {
       this.ticketService.updateTicket(this.ticketToEdit).subscribe(response => {
-        console.log(response);
         if (response.id) {
           this.toastrService.show("Ticket edited", "Success", {
             status: "success"
