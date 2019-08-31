@@ -90,6 +90,14 @@ export class CreateTicketComponent implements OnInit {
               status: "success"
             }
           );
+        } else {
+          this.toastrService.show(
+            "Could not add a ticket. Please try again.",
+            "Oh snap!",
+            {
+              status: "warning"
+            }
+          );
         }
       });
       this.closeWindow();

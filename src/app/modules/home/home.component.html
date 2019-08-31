@@ -10,6 +10,9 @@
         <nb-icon icon="plus-outline"></nb-icon>
       </button>
     </div>
+    <p *ngIf="!openedTickets.length">
+      No openet tickets. Click the + icon to add one.
+    </p>
     <div class="row">
       <div class="col-4" *ngFor="let ticket of openedTickets">
         <nb-card status="success">
@@ -58,9 +61,7 @@
           </nb-card-body>
           <nb-card-footer>
             <div class="row">
-              <div class="col">
-                Opened on: {{ ticket.openDateTime | date: "short" }}
-              </div>
+              <div class="col">Opened on: {{ ticket.openDateTime }}</div>
               <div class="col-4 d-flex justify-content-end">
                 <button
                   nbButton

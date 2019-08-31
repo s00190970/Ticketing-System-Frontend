@@ -3,12 +3,9 @@ import { ITicketResponse } from "../../commons/models/ticket/ticketResponse.mode
 import { TicketService } from "../../core/services/ticket.service";
 import { NbWindowService, NbWindowRef, NbToastrService } from "@nebular/theme";
 import { CreateTicketComponent } from "../create-ticket/create-ticket.component";
-import { ITicketRequest } from "src/app/commons/models/ticket/ticketRequest.model";
 import { EditTicketComponent } from "../edit-ticket/edit-ticket.component";
 import { TicketPropertiesService } from "src/app/core/services/ticketProperties.service";
 import { ITicketProperty } from "src/app/commons/models/ticket/ticketProperty.model";
-import { IWindowContext } from "src/app/commons/models/context/windowContext.model";
-import { IUser } from "src/app/commons/models/user/user.model";
 import { NbAuthService } from "@nebular/auth";
 
 @Component({
@@ -17,8 +14,8 @@ import { NbAuthService } from "@nebular/auth";
   styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit {
-  tickets: ITicketResponse[];
-  openedTickets: ITicketResponse[];
+  tickets: ITicketResponse[] = [];
+  openedTickets: ITicketResponse[] = [];
   createTicketWindowRef: NbWindowRef;
   editTicketWindowRef: NbWindowRef;
 
