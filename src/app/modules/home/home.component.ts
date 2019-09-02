@@ -91,6 +91,10 @@ export class HomeComponent implements OnInit {
     this.editTicketWindowRef.onClose.subscribe(close => {
       this.getTickets();
     });
+    this.toastrService.show(
+      `If the "Edit Ticket window did not open, please refresh the page. This is a know bug.`,
+      "Note"
+    ); //bug caused by the Nebular framework (https://github.com/akveo/nebular/issues/1238)
   }
 
   getTicketProperties() {
